@@ -1,0 +1,56 @@
+#Signbox{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#SignboxImg {
+    transform: scale(0.75);
+}
+#SignboxExampleTopText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: 'Microsoft YaHei UI';
+    color: #ee3f4d;
+}
+#SignboxExampleBottomText {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: 'Microsoft YaHei UI';
+    color: #ee3f4d;
+}
+#SignboxResult{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+}
+#SignboxResultShape {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 88;
+}
+#SignboxResultImg{
+    position: absolute;
+    transform: scale(0.5);
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%,50%);
+    z-index: 888;
+}
+#SignboxResultImg {
+    opacity: 0;
+    transition: opacity 2s;
+}
