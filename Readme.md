@@ -5,12 +5,16 @@
 
 ​	一个今日运势占卜工具，设计的初衷是为了取代博客在用的程序员老黄历，旨在给你的生活增添一些乐趣，设计启发和素材来自于《公主连结 Re:Dive》的一次新年占卜活动。
 
+​	FortuneUpUp里边的推荐你去做/不要做的事件大多都是基于业余程序员（也就是我）的一些日常生活而写出来的，有代码，博客，UP主，视频，游戏，应用，社交，网站，日常等这几大类，如果您有一些想法，欢迎您提出PR。
+
+​	温馨提示: FortuneUpUp生成的内容仅供娱乐，请在面对占卜结果的时候慎重考虑到底要不要做还是不做，由此产生的后果作者概不负责。
+
 # 🪄使用🪄
 
 添加以下代码到您的网页中
 
 ```html
-<script src="FortuneUpUp.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/FortuneUpUp.js"></script>
 ```
 
 绑定事件
@@ -23,4 +27,6 @@
 
 使用GPL v3.0协议
 
-Moemu 2020-2023.
+使用了*https://github.com/jjonline/calendar.js*中的部分源代码并移植
+
+作者: Moemu (muspace.top)
