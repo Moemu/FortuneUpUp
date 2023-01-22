@@ -263,6 +263,6 @@ function StartFortuneUpUp(){
   document.body.appendChild(Signbox);
   var SignboxImg = document.createElement("img");
   SignboxImg.id = "SignboxImg";
-  SignboxImg.src = "images/Signbox.png";
+  SignboxImg.src = "https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png";
   Signbox.appendChild(SignboxImg);
 }
