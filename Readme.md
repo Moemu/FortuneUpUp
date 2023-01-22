@@ -8,7 +8,7 @@
 
 ![Demo页面](https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/Screenshot/Demo.png)
 
-​	![占卜结果](https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/Screenshot/Demo1.png)
+![占卜结果](https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/Screenshot/Demo1.png)
 
 FortuneUpUp里边的推荐你去做/不要做的事件大多都是基于业余程序员（也就是我）的一些日常生活而写出来的，有代码，博客，UP主，视频，游戏，应用，社交，网站，日常等这几大类，如果您有一些想法，欢迎您提出PR。
 
@@ -20,7 +20,7 @@ FortuneUpUp里边的推荐你去做/不要做的事件大多都是基于业余�
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/FortuneUpUp.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/FortuneUpUp.css"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/FortuneUpUp.css"></link>
 ```
 
 绑定事件
@@ -29,10 +29,25 @@ FortuneUpUp里边的推荐你去做/不要做的事件大多都是基于业余�
 <div id="StartFortuneUpUp" onclick="StartupFortuneUpUp()"></div>
 ```
 
+或者
+
+```javascript
+window.onload = function(){
+  StartFortuneUpUp();
+}
+```
+
+# 🎉示例🎉
+
+博客示例页面: [运势UpUp](https://muspace.top/lab/fortuneupup)
+
+![博客示例页面](https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/Screenshot/Demo2.png)
+
+
 # ⚒️关于⚒️
 
 使用GPL v3.0协议
 
-使用了*https://github.com/jjonline/calendar.js*中的部分源代码并移植
+使用了 https://github.com/jjonline/calendar.js 中的部分源代码并移植
 
 作者: Moemu (muspace.top)

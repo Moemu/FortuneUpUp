@@ -129,14 +129,7 @@ function mouseUpEvent(MoveBox) {
     document.getElementById("Signbox").removeEventListener("mousemove", MoveBox);
     document.getElementById("Signbox").removeEventListener("mousedown", mouseDownEvent);
     document.getElementById("Signbox").removeEventListener("mouseup", mouseUpEvent);
-    let SignboxResult = document.createElement("div");
-    let SignboxResultShape = document.createElement("div");
-    SignboxResult.id = "SignboxResult";
-    SignboxResultShape.id = "SignboxResultShape";
-    SignboxResultShape.style = "background-color: black;opacity: 0.75;";
-    SignboxResultShape.addEventListener("mousedown", CloseSignbox);
-    SignboxResult.appendChild(SignboxResultShape);
-    document.body.appendChild(SignboxResult);
+    document.getElementById("Signbox").style.display = "none";
     let CookieFortune = ReadCookie();
     if(CookieFortune){
       var Fortune = CookieFortune[0];
@@ -242,6 +235,7 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
       // 写入
       Background.src = canvas.toDataURL()
       Background.style.opacity = 1;
+      SignboxResultShape.style.zIndex = 88;
       IsRun = false;
     }
   };
@@ -258,8 +252,16 @@ function StartFortuneUpUp(){
   loadScript("https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/LunarCalendar.js");
   loadScript("https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/SignboxResultImg.js");
   var Signbox = document.createElement("div");
+  var SignboxResultShape = document.createElement("div");
+  var SignboxResult = document.createElement("div");
+  SignboxResult.id = "SignboxResult";
   Signbox.id = "Signbox";
   Signbox.addEventListener("mousedown", mouseDownEvent);
+  SignboxResultShape.id = "SignboxResultShape";
+  SignboxResultShape.style = "background-color: black;opacity: 0.75;";
+  SignboxResultShape.addEventListener("mousedown", CloseSignbox);
+  SignboxResult.appendChild(SignboxResultShape);
+  document.body.appendChild(SignboxResult);
   document.body.appendChild(Signbox);
   var SignboxImg = document.createElement("img");
   SignboxImg.id = "SignboxImg";
