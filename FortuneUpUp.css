@@ -6,28 +6,6 @@
 #SignboxImg {
     transform: scale(0.75);
 }
-#SignboxExampleTopText {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    font-family: 'Microsoft YaHei UI';
-    color: #ee3f4d;
-}
-#SignboxExampleBottomText {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    font-family: 'Microsoft YaHei UI';
-    color: #ee3f4d;
-}
 #SignboxResult{
     position: absolute;
     top: 0;
