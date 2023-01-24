@@ -241,16 +241,69 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
   };
 }
 
-// 主函数
-function loadScript(url) {
-  var script = document.createElement("script");
-  script.src = url;
-  document.head.appendChild(script);
+// 加载部分
+function loadDependency(url) {
+  return new Promise((resolve, reject) => {
+    if(url.split('.').pop()=="js"){
+    const script = document.createElement('script');
+    script.src = url;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+    }else if(url.split('.').pop()=="css"){
+      const css = document.createElement('link');
+      css.href = url;
+      css.rel = "stylesheet";
+      css.onload = resolve;
+      css.onerror = reject;
+      document.head.appendChild(css);
+    }else if(url.split('.').pop()=="png"){
+      var SignboxImg = document.createElement('img');
+      SignboxImg.src = url;
+      SignboxImg.onload = resolve;
+      SignboxImg.onerror = reject;
+      SignboxImg.id = "SignboxImg";
+      document.getElementById("Signbox").appendChild(SignboxImg);
+    };
+  });
+};
+
+// 加载第一部分: 加载Snackbar
+function LoadSnackbar(){
+  const Snackbardependencies = [
+    'https://cdn.jsdelivr.net/npm/node-snackbar@latest/src/js/snackbar.min.js',
+    'https://cdn.jsdelivr.net/npm/node-snackbar@latest/dist/snackbar.min.css'
+  ];
+
+  Promise.all(Snackbardependencies.map(loadDependency))
+    .then(() => {
+      Snackbar.show({text:"少女祈祷中..",showAction:false,timeout:10000})
+    })
+    .catch((error) => {
+      console.error(`Error loading dependencies: ${error}`);
+    });
 }
 
+// 加载第二部分: 加载其他JS依赖与IMG依赖
+function LoadDependent(){
+  const dependencies = [
+    'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/LunarCalendar.js',
+    'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/SignboxResultImg.js',
+    'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png'
+  ];
+
+  Promise.all(dependencies.map(loadDependency))
+    .then(() => {
+      Snackbar.close();
+    })
+    .catch((error) => {
+      console.error(`Error loading dependencies: ${error}`);
+    });
+}
+    
+// 总启动器
 function StartFortuneUpUp(){
-  loadScript("https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/LunarCalendar.js");
-  loadScript("https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/SignboxResultImg.js");
+  LoadSnackbar();
   var Signbox = document.createElement("div");
   var SignboxResultShape = document.createElement("div");
   var SignboxResult = document.createElement("div");
@@ -263,8 +316,5 @@ function StartFortuneUpUp(){
   SignboxResult.appendChild(SignboxResultShape);
   document.body.appendChild(SignboxResult);
   document.body.appendChild(Signbox);
-  var SignboxImg = document.createElement("img");
-  SignboxImg.id = "SignboxImg";
-  SignboxImg.src = "https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png";
-  Signbox.appendChild(SignboxImg);
+  LoadDependent();
 }
