@@ -23,32 +23,57 @@ function WhatisTodaysFortune() {
 //运势有了，接下来该是今天适合和不适合做的事情了
 function WhatisTodaysFortuneEvent(Fortune){
   let Events = [
-    {name:"写PY",good:"今天Debug报错少",bad:"今天Debug报错多"},
+    {name:"写代码",good:"今天Debug报错少",bad:"今天Debug报错多"},
     {name:"写网页前端",good:"今天写出来的网页很漂亮",bad:"你会发现你的CSS不起作用"},
+    {name:"为你的项目想一个功能",good:"实现后你的项目会大受欢迎",bad:"实现的时间会比预期长"},
+    {name:"构想一个小工具",good:"没准很实用",bad:"脑子被榨干了~下次再说~"},
+    {name:"编译你的项目",good:"有些问题编译后才能发现",bad:"IDE的报错都没解决完就想编译?"},
+    {name:"解决一个bug",good:"解决起来会非常简单",bad:"小心屎山"},
+    {name:"暴力测试你的应用",good:"增加上线安全性",bad:"先完成基本功能再说"},
+    {name:"换个密码",good:"定期更换密码有利于确保账户的安全性",bad:null},
     {name:"写博客",good:"今天博文会帮助很多人",bad:"没人会看你的博文"},
+    {name:"写一篇随笔",good:"未来的你会看的",bad:"这篇随笔有可能会被遗忘"},
+    {name:"逛逛别人的博客",good:"没准可以找到志同道合的朋友",bad:"也许今天找到的大多不再更新了"},
     {name:"写作业",good:"今天效率很高",bad:"你会很快被其他事情分心"},
+    {name:"学习一下",good:"偶尔努力一下有助于提高成绩",bad:"今天学的效率会很低"},
+    {name:"复习一下",good:"重要性不用我多说了吧",bad:"很没意思"},
     {name:"做视频",good:"今天你会很有创意",bad:"可能今天没有什么创意"},
     {name:"去B站刷视频",good:"今天B友又有了很多活",bad:"你会遇到很多梗小鬼"},
     {name:"去A站看番",good:"或许今天会有新番",bad:"A站还没有买新番"},
+    {name:"看一部新番",good:"这次的新番不错",bad:"感觉不如..."},
+    {name:"回顾一下看过的番",good:"经典永不过时",bad:"下次再说"},
+    {name:"看漫画",good:"ACGN一家亲",bad:"找漫画是件费劲的事情"},
+    {name:"看轻小说",good:"ACGN一家亲",bad:"找小说是件费劲的事情"},
+    {name:"回顾以前玩过的游戏",good:"都是回忆",bad:"下次一定"},
     {name:"发个空间/朋友圈",good:"你会收获很多点赞",bad:"没有人在意你"},
     {name:"打音游",good:"今天可以拿下很多图",bad:"你会收到很多好"},
     {name:"推Gal",good:"你会推得很爽",bad:"你会被刀哭"},
+    {name:"找Gal玩",good:"扩展下后宫",bad:"避免审美疲劳"},
     {name:"抽卡",good:"今天一定出货",bad:"喜提保底"},
+    {name:"许一个愿望",good:"没准就实现了呢~",bad:null},
+    {name:"尝试一个新APP",good:"你的生活会很有效率",bad:"广告大于功能"},
+    {name:"看看今天的探索队列",good:"愿望单又多了几位新成员",bad:"全是三国杀"},
     {name:"听新歌",good:"推荐给你的都是好东西",bad:"还不如歌单里面的经典"},
+    {name:"试一下新歌单",good:"没准能发现宝藏歌曲",bad:"流量歌单没有意思"},
+    {name:"唱首歌给朋友",good:"太好听了吧~简直就是天籁",bad:"人家不屑于听你的歌"},
+    {name:"睡觉",good:"都抽到我了不去睡一下怎么行?",bad:"很容易睡过头"},
     {name:"早睡",good:"补充一下精神",bad:"你的工作还有很多"},
     {name:"熬夜",good:"今晚就可以完成所有工作辣",bad:"白天会把你熬夜的时间补回来"},
     {name:"通宵",good:"就看个日出应该没什么的吧(心虚)",bad:"你会肾虚"},
     {name:"逛某宝某东",good:"今天的购物车会吃得很饱",bad:"你会剁手"},
-    {name:"看看今天的探索队列",good:"愿望单又多了几位新成员",bad:"全是三国杀"},
-    {name:"唱首歌给朋友",good:"太好听了吧~简直就是天籁",bad:"人家不屑于听你的歌"},
+    {name:"整理小窝",good:"整理过后,神清气爽",bad:"现在的小窝找东西更有效率"},
+    {name:"清一下电脑垃圾",good:"看看又堆了几个G",bad:"红了再说"},
+    {name:"扫一下病毒",good:"重要性不用我多说了吧",bad:null},
     {name:"约朋友出来玩",good:"今天会玩得很高兴",bad:"人家没时间"},
     {name:"上Twitter",good:"关注的同志更新了",bad:"时间线会被魔怔人占领"},
     {name:"上Pixiv",good:"今天又有很多好图",bad:"今天的图很没意思"},
     {name:"看Discord",good:"群友的聊天很精彩",bad:"群友聊的不关你事"},
+    {name:"看看你不经常看的群聊",good:"群友的聊天很精彩",bad:"群友聊的不关你事"},
     {name:"去泡个澡",good:"你有多少天没有洗澡了",bad:"洗澡在浪费你的时间"},
     {name:"去散个步",good:"你会发现你从未发现的景象",bad:"你会很快疲惫"},
     {name:"去骑单车",good:"你会骑得很爽",bad:"今天的红灯挺多"},
-    {name:"找个景点玩玩",good:"找到的景点人少风景又美",bad:"景点人挺多的,还贵"}
+    {name:"找个景点玩玩",good:"找到的景点人少风景又美",bad:"景点人挺多的,还贵"},
+    {name:"穿可爱的衣服",good:"今天的你也是如此可爱~",bad:"会被不应该发现的人发现"},
   ];
   let today = new Date();
   ;
@@ -68,8 +93,9 @@ function WhatisTodaysFortuneEvent(Fortune){
       Events.splice(Events.indexOf(GoodEventList[i]),1);
     }
     for(i = 0;i < BadEventsCount;i++){
-      BadEventList.push(Events[Math.floor(Math.random()*Events.length)]);
-      Events.splice(Events.indexOf(BadEventList[i]),1);
+      let BadEvent = Events[Math.floor(Math.random()*Events.length)];
+      if(BadEvent["bad"]==null){i--}else{BadEventList.push(BadEvent)};
+      Events.splice(Events.indexOf(BadEvent),1);
     }
   }
   if(Fortune == "大吉"){
@@ -241,7 +267,9 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
   };
 }
 
+
 // 加载部分
+// 加载依赖函数
 function loadDependency(url) {
   return new Promise((resolve, reject) => {
     if(url.split('.').pop()=="js"){
@@ -301,7 +329,7 @@ function LoadDependent(){
     });
 }
     
-// 总启动器
+// 总启动函数
 function StartFortuneUpUp(){
   LoadSnackbar();
   var Signbox = document.createElement("div");
