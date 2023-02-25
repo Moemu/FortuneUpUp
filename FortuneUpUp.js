@@ -152,25 +152,28 @@ function setCookie(name, value) {
 
 //前端交互部分
 function mouseUpEvent(MoveBox) {
-    document.getElementById("Signbox").removeEventListener("mousemove", MoveBox);
-    document.getElementById("Signbox").removeEventListener("mousedown", mouseDownEvent);
-    document.getElementById("Signbox").removeEventListener("mouseup", mouseUpEvent);
-    document.getElementById("Signbox").style.display = "none";
-    let CookieFortune = ReadCookie();
-    if(CookieFortune){
-      var Fortune = CookieFortune[0];
-      var GoodEventList = CookieFortune[1];
-      var BadEventList = CookieFortune[2];
-    }else{
-      var Fortune = WhatisTodaysFortune();
-      var FortuneEvent = WhatisTodaysFortuneEvent(Fortune);
-      var GoodEventList = FortuneEvent[0];
-      var BadEventList = FortuneEvent[1];
-      setCookie("Fortune", Fortune);
-      setCookie("GoodEventList", JSON.stringify(GoodEventList));
-      setCookie("BadEventList", JSON.stringify(BadEventList));
-    };
-    WriteFortuneToImg(Fortune,GoodEventList,BadEventList)
+  document.getElementById("Signbox").removeEventListener("mousemove", MoveBox);
+  document.getElementById("Signbox").removeEventListener("touchmove", MoveBox);
+  document.getElementById("Signbox").removeEventListener("mousedown", mouseDownEvent);
+  document.getElementById("Signbox").removeEventListener("touchstart", mouseDownEvent);
+  document.getElementById("Signbox").removeEventListener("mouseup", mouseUpEvent);
+  document.getElementById("Signbox").removeEventListener("touchend", mouseUpEvent);
+  document.getElementById("Signbox").style.display = "none";
+  let CookieFortune = ReadCookie();
+  if(CookieFortune){
+    var Fortune = CookieFortune[0];
+    var GoodEventList = CookieFortune[1];
+    var BadEventList = CookieFortune[2];
+  }else{
+    var Fortune = WhatisTodaysFortune();
+    var FortuneEvent = WhatisTodaysFortuneEvent(Fortune);
+    var GoodEventList = FortuneEvent[0];
+    var BadEventList = FortuneEvent[1];
+    setCookie("Fortune", Fortune);
+    setCookie("GoodEventList", JSON.stringify(GoodEventList));
+    setCookie("BadEventList", JSON.stringify(BadEventList));
+  };
+  WriteFortuneToImg(Fortune,GoodEventList,BadEventList)
 };
 
 function mouseDownEvent(event) {
@@ -184,20 +187,28 @@ function mouseDownEvent(event) {
     if (event.type === "mousedown") {
       initialX = event.clientX;
       initialY = event.clientY;
-      xOffset = initialX - Signbox.offsetLeft;
-      yOffset = initialY - Signbox.offsetTop;
-    }
-
+    }else if (event.type == "touchstart") {
+      initialX = event.touches[0].clientX;
+      initialY = event.touches[0].clientY;
+    };
+    xOffset = initialX - Signbox.offsetLeft;
+    yOffset = initialY - Signbox.offsetTop;
     function MoveBox(event) {
       event.preventDefault();
+      if (event.type === "touchmove") {
+        currentX = event.touches[0].clientX - xOffset;
+        currentY = event.touches[0].clientY - yOffset;
+      }else{
       currentX = event.clientX - xOffset;
       currentY = event.clientY - yOffset;
-    
+      };
       Signbox.style.top = currentY + "px";
       Signbox.style.left = currentX + "px";
       };
     document.getElementById("Signbox").addEventListener("mousemove", MoveBox, false);
     document.getElementById("Signbox").addEventListener("mouseup", function(){mouseUpEvent(MoveBox)}, false);
+    document.getElementById("Signbox").addEventListener("touchmove", MoveBox, { passive: false });
+    document.getElementById("Signbox").addEventListener("touchend", function(){mouseUpEvent(MoveBox)}, { passive: false });
   }
   
 function CloseSignbox(){
@@ -338,9 +349,11 @@ function StartFortuneUpUp(){
   SignboxResult.id = "SignboxResult";
   Signbox.id = "Signbox";
   Signbox.addEventListener("mousedown", mouseDownEvent);
+  Signbox.addEventListener("touchstart", mouseDownEvent)
   SignboxResultShape.id = "SignboxResultShape";
   SignboxResultShape.style = "background-color: black;opacity: 0.75;";
   SignboxResultShape.addEventListener("mousedown", CloseSignbox);
+  SignboxResultShape.addEventListener("touchstart", CloseSignbox);
   SignboxResult.appendChild(SignboxResultShape);
   document.body.appendChild(SignboxResult);
   document.body.appendChild(Signbox);

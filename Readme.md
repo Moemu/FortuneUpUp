@@ -26,7 +26,7 @@ FortuneUpUp里边的推荐你去做/不要做的事件大多都是基于业余�
 绑定事件
 
 ```html
-<div id="StartFortuneUpUp" onclick="StartupFortuneUpUp()"></div>
+<div id="StartFortuneUpUp" onclick="StartFortuneUpUp()"></div>
 ```
 
 或者
