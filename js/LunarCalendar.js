@@ -149,15 +149,9 @@ function lunar2solar(y, m, d, isLeapMonth) {
 }
 
 //以下内容由Moemu添加以适用于FortuneUpUp
-function IsLunarNewYear(){
+function GetLunarFestivalDate(month, day) {
     let today = new Date();
-    let LunarNewYearDateList = [];
-    for(i = 0;i < 16;i++){
-        LunarNewYearDateList.push(lunar2solar(today.getFullYear(),1,i));
-    }
-    if(LunarNewYearDateList.indexOf(today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate())!=-1){
-        return true;
-    }else{
-        return false;
-    }
+    let year = today.getFullYear();
+    let lunarDate = lunar2solar(year, month, day);
+    return [lunarDate[1],lunarDate[2]];
 }

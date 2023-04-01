@@ -75,19 +75,89 @@ function WhatisTodaysFortuneEvent(Fortune){
     {name:"找个景点玩玩",good:"找到的景点人少风景又美",bad:"景点人挺多的,还贵"},
     {name:"穿可爱的衣服",good:"今天的你也是如此可爱~",bad:"会被不应该发现的人发现"},
   ];
-  let today = new Date();
   ;
-  let SpecialEvents = [
-    {Isdate:IsLunarNewYear(),name:"换新衣",good:"当然是穿漂亮衣服辣",bad:null},
-    {Isdate:IsLunarNewYear(),name:"走亲访友",good:"听说会有大红包",bad:null},
-    {Isdate:IsLunarNewYear(),name:"行花街",good:"行行花街,睇睇春花",bad:null},
-    {Isdate:IsLunarNewYear(),name:"回看拜年祭视频",good:"不管是大规模的还是民间的,开心就好",bad:null},
-    {Isdate:IsLunarNewYear(),name:"讨红包",good:"今日获得的红包翻倍噢",bad:null}
+  // 节日的特别事件
+  // 日期格式: (L)MM.DD 若日期前含有L,则为农历
+  let SpecialFestivalEvents = [
+    {Date:"L01.01",name:"换新衣",good:"当然是穿漂亮衣服辣",bad:null},
+    {Date:"L01.01",name:"走亲访友",good:"听说会有大红包",bad:null},
+    {Date:"L01.01",name:"行花街",good:"行行花街,睇睇春花",bad:null},
+    {Date:"L01.01",name:"回看拜年祭视频",good:"不管是大规模的还是民间的,开心就好",bad:null},
+    {Date:"L01.01",name:"讨红包",good:"今日获得的红包翻倍噢",bad:null},
+    {Date:"L01.15",name:"来口元宵",good:"一口下去，全是传统和怀恋",bad:null},
+    {Date:"L05.05",name:"来口粽子",good:"自己包的说不定更好吃",bad:null},
+    {Date:"L12.30",name:"吃年夜饭",good:"无论身在何处，我都希望各位能够和亲人欢度今宵",bad:null},
+    {Date:"06.01",name:"像个孩子一样",good:"有多久没有像个孩子一样天真，憧憬未来了",bad:null},
+    {Date:"07.21",name:"Ciallo ~ (∠・ω< )⌒☆",good:"无论如何，今天就是这样一个日子嘛",bad:null},
+    {Date:"08.31",name:"写作业",good:"创造奇迹",bad:"反正都写不完，不如开摆"},
+    {Date:"09.01",name:"思乡",good:"妈妈，我要回家",bad:null},
+    {Date:"11.01",name:"Trick or Treat",good:"搞怪，讨糖果",bad:null},
+    {Date:"12.25",name:"过圣诞",good:"Cosplay,送礼物,吃个大餐",bad:null},
+    {Date:"12.31",name:"回头想想这一年",good:"发生的事情还是挺多的，用纸和笔记录下来吧",bad:null},
   ];
-  //判断部分
-  let GoodEventList = [];
-  let BadEventList = [];
-  function Extractor(GoodEventsCount,BadEventsCount){
+  // 普通节日事件
+  let NormalFestivalEvents = {name:"出去玩",good:"难得放假，出去散个步也好",bad:"节日人多，景点贵，还是在家好"};
+  // 普通节日日期列表
+  let NormalFestivalDateList = ["01.01","05.01","10.01"];
+  // 返回节日运势
+  function GetFestivalFortune(){
+    let today = new Date();
+    let month = ("0" + (today.getMonth() + 1)).slice(-2);
+    let day = ("0" + today.getDate()).slice(-2);
+    let FestivalEventsList = [];
+    let FestivalEvent = null;
+    let GoodEventList = [];
+    let BadEventList = [];
+    let isFestival = 0;
+    for(i = 0;i < SpecialFestivalEvents.length;i++){
+      let FestivalDate = SpecialFestivalEvents[i]["Date"];
+      if(FestivalDate.indexOf("L") == 0){
+        FestivalDate = FestivalDate.replace("L","").split(".");
+        FestivalDate = GetLunarFestivalDate(FestivalDate[0],FestivalDate[1])
+        FestivalDate = ("0" + (FestivalDate[0])).slice(-2) + "." + ("0" + FestivalDate[1]).slice(-2);
+      }
+      console.log(FestivalDate)
+      console.log(month+"."+day)
+      if(FestivalDate == month+"."+day){
+        FestivalEventsList.push(SpecialFestivalEvents[i]);
+      }
+    }
+    for(i = 0;i < NormalFestivalDateList.length;i++){
+      if(NormalFestivalDateList[i] == month+"."+day){
+        FestivalEventsList.push(NormalFestivalEvents);
+      }
+    }
+    // 生成GoodEventList和BadEventList
+    if(FestivalEventsList.length > 1){
+      //同一个节日有多个事件时，随机抽取一个
+      FestivalEvent = FestivalEventsList[Math.floor(Math.random()*FestivalEventsList.length)];
+    }else if(FestivalEventsList.length == 1){
+      FestivalEvent = FestivalEventsList[0];
+    };
+    if(FestivalEvent != null){
+      if(FestivalEvent["bad"] != null){
+        if(Math.random() > 0.6){
+          GoodEventList.push(FestivalEvent);
+          isFestival = 1;
+        }else{
+          BadEventList.push(FestivalEvent);
+          isFestival = -1;
+        }
+      }else{
+        GoodEventList.push(FestivalEvent);
+        isFestival = 1;
+      }
+    }
+    return [GoodEventList,BadEventList,isFestival];
+  }
+  // 获取今日运势
+  let Eventslists = GetFestivalFortune();
+  let GoodEventList = Eventslists[0];
+  let BadEventList = Eventslists[1];
+  let isFestival = Eventslists[2];
+  // 抽取事件函数
+  function Extractor(GoodEventsCount,BadEventsCount,isFestival){
+    if(isFestival == 1){GoodEventsCount -= 1}else if(isFestival == -1){BadEventsCount -= 1}
     for(i = 0;i < GoodEventsCount;i++){
       GoodEventList.push(Events[Math.floor(Math.random()*Events.length)]);
       Events.splice(Events.indexOf(GoodEventList[i]),1);
@@ -99,13 +169,13 @@ function WhatisTodaysFortuneEvent(Fortune){
     }
   }
   if(Fortune == "大吉"){
-    Extractor(4,0);
+    Extractor(4,0,isFestival);
   }else if(Fortune == "中吉"){
-    Extractor(3,1);
+    Extractor(3,1,isFestival);
   }else if(Fortune == "小吉"){
-    Extractor(2,2);
+    Extractor(2,2,isFestival);
   }else if(Fortune == "不太吉"){
-    Extractor(1,3);
+    Extractor(1,3,isFestival);
   }
   return [GoodEventList,BadEventList];
 }
