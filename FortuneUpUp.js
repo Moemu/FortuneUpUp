@@ -13,7 +13,6 @@ function WhatisTodaysFortune() {
   let r = Math.random() * total;
   for (let i = 0; i < options.length; i++) {
     if (r < options[i].probability) {
-      console.log(options[i].name)
       return options[i].name;
     }
     r -= options[i].probability;
@@ -116,8 +115,6 @@ function WhatisTodaysFortuneEvent(Fortune){
         FestivalDate = GetLunarFestivalDate(FestivalDate[0],FestivalDate[1])
         FestivalDate = ("0" + (FestivalDate[0])).slice(-2) + "." + ("0" + FestivalDate[1]).slice(-2);
       }
-      console.log(FestivalDate)
-      console.log(month+"."+day)
       if(FestivalDate == month+"."+day){
         FestivalEventsList.push(SpecialFestivalEvents[i]);
       }
@@ -387,9 +384,12 @@ function LoadSnackbar(){
   Promise.all(Snackbardependencies.map(loadDependency))
     .then(() => {
       Snackbar.show({text:"少女祈祷中..",showAction:false,timeout:10000})
+      LoadDependent();
     })
     .catch((error) => {
+      Snackbar.close();
       console.error(`Error loading dependencies: ${error}`);
+      Snackbar.show({text:"依赖加载失败",showAction:false})
     });
 }
 
@@ -406,13 +406,13 @@ function LoadDependent(){
       Snackbar.close();
     })
     .catch((error) => {
-      console.error(`Error loading dependencies: ${error}`);
+      Snackbar.close();
+      console.log(`Error loading dependencies: ${error}`);
+      Snackbar.show({text:"依赖加载失败",showAction:false})
     });
 }
-    
-// 总启动函数
-function StartFortuneUpUp(){
-  LoadSnackbar();
+
+function AppendSignbox(){
   var Signbox = document.createElement("div");
   var SignboxResultShape = document.createElement("div");
   var SignboxResult = document.createElement("div");
@@ -427,5 +427,10 @@ function StartFortuneUpUp(){
   SignboxResult.appendChild(SignboxResultShape);
   document.body.appendChild(SignboxResult);
   document.body.appendChild(Signbox);
-  LoadDependent();
+}
+
+// 总启动函数
+function StartFortuneUpUp(){
+  LoadSnackbar();
+  AppendSignbox();
 }
