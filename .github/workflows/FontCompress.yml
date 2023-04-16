@@ -1,0 +1,38 @@
+name: Font Subsetting and Compression
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  subsetting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install SSH
+        run: apt-get update && apt-get install -y openssh-client
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install FontTools
+        run: pip install fonttools
+      - name: Download Font
+        run: curl -L -o filename.zip https://file.muspace.top/font/XiaolaiSC-Regular.tff
+      - name: Compress Fonts
+        run: python font/Compress.py
+      - name: Git push
+        run: |
+          git config --global user.email "WhitemuTeam@outlook.com"
+          git config --global user.name "Github Actions"
+          git add .
+          git commit -m "Update Font"
+          git push git@github.com:Moemu/FortuneUpUp.git HEAD:main
