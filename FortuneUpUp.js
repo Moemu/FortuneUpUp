@@ -181,14 +181,14 @@ function WhatisTodaysFortuneEvent(Fortune){
 function getCookie(cname) { //ReadCookie的铺助函数,用于规范读取cookie
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i <ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+  var cookieArray = decodedCookie.split(';');
+  for(var i = 0; i < cookieArray.length; i++) {
+    var cookie = cookieArray[i];
+    while (cookie.charAt(0) == ' ') {
+      cookie = cookie.substring(1);
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+    if (cookie.indexOf(name) == 0) {
+      return cookie.substring(name.length, cookie.length);
     }
   }
   return "";
@@ -349,31 +349,39 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
 // 加载部分
 // 加载依赖函数
 function loadDependency(url) {
+  ext = url.split(".").pop();
   return new Promise((resolve, reject) => {
-    if(url.split('.').pop()=="js"){
+    if(ext == "js"){
     const script = document.createElement('script');
     script.src = url;
     script.onload = resolve;
     script.onerror = reject;
     document.head.appendChild(script);
-    }else if(url.split('.').pop()=="css"){
+    }else if(ext == "css"){
       const css = document.createElement('link');
       css.href = url;
       css.rel = "stylesheet";
       css.onload = resolve;
       css.onerror = reject;
       document.head.appendChild(css);
-    }else if(url.split('.').pop()=="png"){
+    }else if(ext == "png"){
       var SignboxImg = document.createElement('img');
       SignboxImg.src = url;
       SignboxImg.onload = resolve;
       SignboxImg.onerror = reject;
       SignboxImg.id = "SignboxImg";
       document.getElementById("Signbox").appendChild(SignboxImg);
-    };
+    } else if(ext == "ttf" || ext == "otf" || ext == "woff" || ext == "woff2"){
+      const font = new FontFace('小赖字体 等宽 SC', `url(${url})`);
+      font.load().then(() => {
+        document.fonts.add(font);
+        resolve();
+      }).catch(reject);
+    } else {
+      reject(`Unsupported file format: ${ext}`);
+    }
   });
-};
-
+}
 // 加载第一部分: 加载Snackbar
 function LoadSnackbar(){
   const Snackbardependencies = [
@@ -398,7 +406,8 @@ function LoadDependent(){
   const dependencies = [
     'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/LunarCalendar.js',
     'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/SignboxResultImg.js',
-    'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png'
+    'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png',
+    'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/font/XiaolaiSC-Tiny.woff2'
   ];
 
   Promise.all(dependencies.map(loadDependency))
