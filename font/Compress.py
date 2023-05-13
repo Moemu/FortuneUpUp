@@ -16,7 +16,7 @@ def GetCharacterSubset():
         f.write(text_set)
 
 def CompressFont(text_set):
-    os.system('pyftsubset XiaolaiSC-Regular.ttf --text-file=text_set.txt --flavor=woff2 --output-file=font/XiaolaiSC-Tiny.woff2'.format(text_set))
+    os.system('pyftsubset XiaolaiSC-Regular.ttf --text-file=text_set.txt --flavor=woff2 --output-file=XiaolaiSC-Tiny.woff2'.format(text_set))
     return None
 
 if __name__ == '__main__':

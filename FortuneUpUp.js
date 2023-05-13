@@ -409,7 +409,7 @@ function LoadDependent(Settings){
     'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png'
   ];
   if(Settings["ThirdPartyFont"]){
-    dependencies.push('https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/font/XiaolaiSC-Tiny.woff2')};
+    dependencies.push('https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp@FontCompress/XiaolaiSC-Tiny.woff2')};
   Promise.all(dependencies.map(loadDependency))
     .then(() => {
       Snackbar.close();
