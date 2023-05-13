@@ -62,7 +62,7 @@ function WhatisTodaysFortuneEvent(Fortune){
     {name:"逛某宝某东",good:"今天的购物车会吃得很饱",bad:"你会剁手",tag:"其他"},
     {name:"整理小窝",good:"整理过后,神清气爽",bad:"现在的小窝找东西更有效率",tag:"日常"},
     {name:"清一下电脑垃圾",good:"看看又堆了几个G",bad:"红了再说",tag:"日常"},
-    {name:"扫一下病毒",good:"重要性不用我多说了吧",bad:null,tag:"日常"},
+    {name:"扫一下病毒",good:"重要性不用我多说了吧",bad:"浪费CPU，不干",tag:"日常"},
     {name:"约朋友出来玩",good:"今天会玩得很高兴",bad:"人家没时间",tag:"社交"},
     {name:"上Twitter",good:"关注的同志更新了",bad:"时间线会被魔怔人占领",tag:"社交"},
     {name:"上Pixiv",good:"今天又有很多好图",bad:"今天的图很没意思",tag:"ACGNer"},
