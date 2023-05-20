@@ -1,3 +1,6 @@
+// 设置项
+var CustomFont = "小赖字体 等宽 SC"; //在此处修改字体
+
 //今日的运势是？
 function WhatisTodaysFortune() {
   let options = [
@@ -304,7 +307,7 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
       ctx.drawImage(Background, 0, 0); //插入背景
       ctx.drawImage(GoodThingImg,35,105); //插入图标
       //调整标题字体
-      ctx.font = "60px 小赖字体 等宽 SC"; //在此处修改运势字体大小和字体
+      ctx.font = "60px "+CustomFont; //在此处修改运势字体大小和字体
       ctx.fillStyle = "#ee3f4d";
       //定位标题
       var FortuneWidth = ctx.measureText(Fortune).width;
@@ -313,10 +316,10 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
       ctx.fillText(Fortune, x, 100);
       // 宜
       for(let i = 0;i<GoodEventList.length;i++){
-        ctx.font = "30px 小赖字体 等宽 SC"; //在此处修改事件字体大小和字体
+        ctx.font = "30px "+CustomFont; //在此处修改事件字体大小和字体
         ctx.fillStyle = "#ee3f4d"
         ctx.fillText("· "+GoodEventList[i]["name"], 60, y);
-        ctx.font = "15px 小赖字体 等宽 SC"; //在此处修改备注字体大小和字体
+        ctx.font = "15px "+CustomFont; //在此处修改备注字体大小和字体
         ctx.fillStyle = "#7a7374"
         ctx.fillText(GoodEventList[i]["good"], 110, y+25);
         y += 60;
@@ -327,10 +330,10 @@ function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
         ctx.drawImage(BadThingImg,35,y);
         y += 28 + 30;
         for(let i = 0;i<BadEventList.length;i++){
-          ctx.font = "30px 小赖字体 等宽 SC"; //在此处修改事件字体大小和字体
+          ctx.font = "30px "+CustomFont; //在此处修改事件字体大小和字体
           ctx.fillStyle = "#ee3f4d"
           ctx.fillText("· "+BadEventList[i]["name"], 60, y);
-          ctx.font = "15px 小赖字体 等宽 SC"; //在此处修改备注字体大小和字体
+          ctx.font = "15px "+CustomFont; //在此处修改备注字体大小和字体
           ctx.fillStyle = "#7a7374"
           ctx.fillText(BadEventList[i]["bad"], 110, y+25);
           y += 60;
@@ -383,7 +386,7 @@ function loadDependency(url) {
   });
 }
 // 加载第一部分: 加载Snackbar
-function LoadSnackbar(Settings){
+function LoadSnackbar(){
   const Snackbardependencies = [
     'https://cdn.jsdelivr.net/npm/node-snackbar@latest/src/js/snackbar.min.js',
     'https://cdn.jsdelivr.net/npm/node-snackbar@latest/dist/snackbar.min.css'
@@ -392,7 +395,7 @@ function LoadSnackbar(Settings){
   Promise.all(Snackbardependencies.map(loadDependency))
     .then(() => {
       Snackbar.show({text:"少女祈祷中..",showAction:false,timeout:10000})
-      LoadDependent(Settings);
+      LoadDependent();
     })
     .catch((error) => {
       Snackbar.close();
@@ -402,14 +405,12 @@ function LoadSnackbar(Settings){
 }
 
 // 加载第二部分: 加载其他JS依赖与IMG依赖
-function LoadDependent(Settings){
+function LoadDependent(){
   let dependencies = [
     'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/LunarCalendar.js',
     'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/js/SignboxResultImg.js',
     'https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp/images/Signbox.png'
   ];
-  if(Settings["ThirdPartyFont"]){
-    dependencies.push('https://cdn.jsdelivr.net/gh/Moemu/FortuneUpUp@FontCompress/XiaolaiSC-Tiny.woff2')};
   Promise.all(dependencies.map(loadDependency))
     .then(() => {
       Snackbar.close();
@@ -439,7 +440,7 @@ function AppendSignbox(){
 }
 
 // 总启动函数
-function StartFortuneUpUp(Settings = {"ThirdPartyFont":true}){
-  LoadSnackbar(Settings);
+function StartFortuneUpUp(){
+  LoadSnackbar();
   AppendSignbox();
 }
