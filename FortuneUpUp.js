@@ -282,8 +282,13 @@ function mouseDownEvent(event) {
   }
   
 function CloseSignbox(){
-  document.getElementById("Signbox").style.display = "none";
-  document.getElementById("SignboxResult").style.display = "none";
+  PressShapeTime += 1;
+  if(PressShapeTime == 2){
+    document.getElementById("Signbox").style.display = "none";
+    document.getElementById("SignboxResult").style.display = "none";
+  }else{
+    Snackbar.show({text:"再按一次关闭",showAction:false,timeout:2000})
+  }
 }
 
 function WriteFortuneToImg(Fortune,GoodEventList,BadEventList) {
@@ -426,6 +431,7 @@ function AppendSignbox(){
   var Signbox = document.createElement("div");
   var SignboxResultShape = document.createElement("div");
   var SignboxResult = document.createElement("div");
+  PressShapeTime = 0;
   SignboxResult.id = "SignboxResult";
   Signbox.id = "Signbox";
   Signbox.addEventListener("mousedown", mouseDownEvent);
