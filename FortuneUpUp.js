@@ -90,6 +90,7 @@ function WhatisTodaysFortuneEvent(Fortune){
     {Date:"L05.05",name:"来口粽子",good:"自己包的说不定更好吃",bad:null},
     {Date:"L12.30",name:"吃年夜饭",good:"无论身在何处，我都希望各位能够和亲人欢度今宵",bad:null},
     {Date:"06.01",name:"像个孩子一样",good:"有多久没有像个孩子一样天真，憧憬未来了",bad:null},
+    {Date:"06.07",name:"参加高考",good:"无论如何，你是最棒的☆",bad:null},
     {Date:"07.21",name:"Ciallo ~ (∠・ω< )⌒☆",good:"无论如何，今天就是这样一个日子嘛",bad:null},
     {Date:"08.31",name:"写作业",good:"创造奇迹",bad:"反正都写不完，不如开摆"},
     {Date:"09.01",name:"思乡",good:"妈妈，我要回家",bad:null},
